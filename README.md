@@ -1,12 +1,14 @@
 # ACES Differential Automation
 
-**An hourly pipeline that turns recurring catalog comparisons into traceable SQL history.**
+**An automated data pipeline connecting the PIM website, report files, and SQL Server.**
 
-I built this workflow to coordinate ACES export discovery, comparison submission in a product information management system, report collection, and SQL Server imports. It replaces a sequence of manual handoffs with one scheduled process, while keeping uncertain submissions visible for review.
+I built this pipeline to combine web automation and data engineering: discover ACES exports, submit catalog comparisons through a product information management (PIM) website, collect completed reports, and deliver analysis-ready data in SQL Server.
+
+The workflow coordinates a browser session, asynchronous PIM processing, network files, SQL transactions, and email notifications. Each can fail independently. The pipeline records progress at each boundary, distinguishes safe retries from uncertain submissions, and recovers completed work without repeating it.
 
 **Status:** Deployed internally on Windows. **Built with:** Python · Playwright · SQL Server · Windows Task Scheduler · Outlook.
 
-![Workflow diagram: pair catalog exports, submit the comparison to PIM, collect report files, and commit eight TSV imports to SQL Server](assets/workflow-overview.png)
+![Pipeline illustration: catalog exports flow through automation of the PIM website, report collection, and SQL Server imports](assets/workflow-overview.png)
 
 *Illustration of the implemented workflow, not a screenshot or a simulated production run.*
 
@@ -58,6 +60,7 @@ The separate import log records the successful file imports, including zero-row 
 
 ## Engineering decisions that matter
 
+- **Automate a stateful website.** Playwright logs in, uploads two exports, waits for the exact files to become selectable, triggers the report-name field's UI events, and checks a fresh matching acceptance message. Browser failures are isolated so a later pair can start with a recovered browser session.
 - **Treat acceptance uncertainty differently from failure.** If the browser loses the confirmation after Compare may have been clicked, automatically resubmitting could create duplicate PIM work. That report remains `NeedsReview` instead.
 - **Commit one report together.** All eight imports and their log entries share a SQL transaction. A lost commit response is resolved from the durable SQL log on a later run, not by guessing whether the first attempt failed.
 - **Keep orchestration simple.** One controller prevents overlapping runs and gives each stage a timeout. SQL application locks and uniqueness constraints protect the database independently of the local tracker.

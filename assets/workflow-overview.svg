@@ -1,47 +1,62 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" role="img" aria-labelledby="title desc">
-  <title id="title">ACES Differential Automation workflow</title>
-  <desc id="desc">An hourly workflow pairs recurring catalog snapshots, submits a comparison to PIM, collects two ZIPs and two error files, and imports eight TSVs into SQL Server. Saved identity, safe retries and completion tracking connect the stages.</desc>
-  <rect width="1600" height="1000" fill="#f4f3ed"/>
-  <rect x="48" y="48" width="1504" height="904" rx="30" fill="#fffefa" stroke="#dedfd6" stroke-width="2"/>
+  <title id="title">ACES differential pipeline: web automation and data engineering</title>
+  <desc id="desc">Four connected icons show catalog exports, automation of the PIM website, collected report files, and SQL Server imports.</desc>
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="9" stdDeviation="16" flood-color="#274d42" flood-opacity=".07"/></filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1 L7 5 L1 9" fill="none" stroke="#6e9684" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker>
+  </defs>
+  <rect width="1600" height="1000" fill="#f2f4ee"/>
+  <circle cx="1510" cy="35" r="320" fill="#e4ece2"/>
+  <circle cx="-30" cy="1040" r="310" fill="#e8ede3"/>
   <g font-family="Segoe UI, Arial, sans-serif">
-    <rect x="96" y="102" width="10" height="30" rx="5" fill="#315e4c"/>
-    <text x="124" y="127" font-size="25" font-weight="650" letter-spacing="2" fill="#315e4c">ACES DIFFERENTIAL AUTOMATION</text>
-    <text x="96" y="228" font-size="67" font-weight="650" letter-spacing="-2" fill="#202e29">From catalog snapshots</text>
-    <text x="96" y="306" font-size="67" font-weight="650" letter-spacing="-2" fill="#202e29">to traceable SQL history.</text>
-    <text x="98" y="366" font-size="27" fill="#65716a">One hourly workflow. Each comparison followed through to completion.</text>
-    <path d="M252 476 H1350" stroke="#aac1b3" stroke-width="4"/>
-    <g fill="#fffefa" stroke="#cdd7ce" stroke-width="2">
-      <rect x="96" y="442" width="334" height="238" rx="18"/>
-      <rect x="454" y="442" width="334" height="238" rx="18"/>
-      <rect x="812" y="442" width="334" height="238" rx="18"/>
-      <rect x="1170" y="442" width="334" height="238" rx="18" fill="#eaf2e9" stroke="#96b6a2"/>
+    <text x="96" y="148" font-size="29" font-weight="600" letter-spacing="3" fill="#47765e">WEB AUTOMATION + DATA ENGINEERING</text>
+    <text x="92" y="238" font-size="74" font-weight="650" letter-spacing="-2.5" fill="#203b30">ACES differential pipeline</text>
+    <g stroke="#6e9684" stroke-width="5" stroke-linecap="round" marker-end="url(#arrow)">
+      <path d="M367 536 H440"/><path d="M747 536 H820"/><path d="M1127 536 H1200"/>
     </g>
-    <g fill="#315e4c">
-      <circle cx="140" cy="486" r="23"/><circle cx="498" cy="486" r="23"/>
-      <circle cx="856" cy="486" r="23"/><circle cx="1214" cy="486" r="23"/>
+    <g fill="#fffefa" filter="url(#shadow)">
+      <rect x="92" y="390" width="270" height="292" rx="34"/>
+      <rect x="472" y="390" width="270" height="292" rx="34"/>
+      <rect x="852" y="390" width="270" height="292" rx="34"/>
+      <rect x="1232" y="390" width="270" height="292" rx="34"/>
     </g>
-    <g font-size="22" font-weight="650" fill="#fffefa" text-anchor="middle">
-      <text x="140" y="494">1</text><text x="498" y="494">2</text>
-      <text x="856" y="494">3</text><text x="1214" y="494">4</text>
+    <g stroke="#335e4a" stroke-width="5" stroke-linejoin="round">
+      <path d="M142 446 H238 L268 476 V599 H142 Z" fill="#dce8db"/>
+      <path d="M179 479 H275 L306 510 V633 H179 Z" fill="#fffefa"/>
+      <path d="M275 479 V510 H306" fill="#dce8db"/>
+      <path d="M200 588 H283 M200 607 H258" stroke="#9cb6a3" stroke-width="5" stroke-linecap="round"/>
     </g>
-    <g font-size="32" font-weight="650" fill="#253b30">
-      <text x="122" y="555">Pair exports</text><text x="480" y="555">Submit to PIM</text>
-      <text x="838" y="555">Collect reports</text><text x="1196" y="555">Import to SQL</text>
+    <text x="197" y="563" font-size="33" font-weight="700" fill="#335e4a">ACES</text>
+    <g stroke="#335e4a" stroke-width="5" stroke-linejoin="round">
+      <rect x="502" y="455" width="210" height="165" rx="12" fill="#fffefa"/>
+      <path d="M504 492 H710"/>
     </g>
-    <g font-size="23" fill="#5f6f65">
-      <text x="122" y="603">Previous + current</text><text x="122" y="637">for each catalog stream</text>
-      <text x="480" y="603">Request the comparison</text><text x="480" y="637">and confirm acceptance</text>
-      <text x="838" y="603">Preserve and extract</text><text x="838" y="637">2 ZIPs + 2 error files</text>
-      <text x="1196" y="603">8 TSVs, 8 tables</text><text x="1196" y="637">One report transaction</text>
+    <g fill="#759782"><circle cx="521" cy="474" r="5"/><circle cx="540" cy="474" r="5"/><circle cx="559" cy="474" r="5"/></g>
+    <g fill="#e0ebde" stroke="#638870" stroke-width="3"><rect x="523" y="512" width="57" height="82" rx="5"/><rect x="634" y="512" width="57" height="82" rx="5"/></g>
+    <g stroke="#335e4a" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none">
+      <path d="M591 538 H623 L614 529 M623 538 L614 547"/>
+      <path d="M623 568 H591 L600 559 M591 568 L600 577"/>
+      <path d="M536 529 H566 M536 543 H559 M647 529 H677 M647 543 H670" stroke="#92ad99" stroke-width="3"/>
     </g>
-    <rect x="96" y="734" width="1408" height="100" rx="16" fill="#eef1e8"/>
-    <g fill="#315e4c" font-size="25" font-weight="600">
-      <text x="133" y="794">Saved report identity</text>
-      <text x="609" y="794">Safe retries</text>
-      <text x="1048" y="794">Completion tracking</text>
+    <path d="M888 484 Q888 474 900 474 H956 L974 494 H1074 Q1085 494 1085 508 V613 H888 Z" fill="#a9c2ab" stroke="#335e4a" stroke-width="5" stroke-linejoin="round"/>
+    <rect x="922" y="453" width="78" height="128" rx="5" fill="#fffefa" stroke="#638870" stroke-width="4" transform="rotate(-9 961 517)"/>
+    <rect x="973" y="466" width="78" height="119" rx="5" fill="#f0f4e9" stroke="#638870" stroke-width="4" transform="rotate(8 1012 525)"/>
+    <g stroke="#9bb5a0" stroke-width="4" stroke-linecap="round"><path d="M943 478 L977 473 M946 495 L980 490 M994 488 L1027 493 M992 506 L1025 511"/></g>
+    <path d="M887 535 Q885 523 898 523 H1078 Q1092 523 1089 537 L1075 617 Q1074 627 1061 627 H911 Q899 627 897 614 Z" fill="#6d947a" stroke="#335e4a" stroke-width="5" stroke-linejoin="round"/>
+    <path d="M956 571 H1019" stroke="#fffefa" stroke-width="6" stroke-linecap="round"/>
+    <path d="M1280 478 V597 C1280 647 1454 647 1454 597 V478 Z" fill="#335e4a"/>
+    <ellipse cx="1367" cy="478" rx="87" ry="32" fill="#a9c6ac" stroke="#335e4a" stroke-width="5"/>
+    <path d="M1282 591 C1282 633 1452 633 1452 591" fill="none" stroke="#a9c6ac" stroke-width="4"/>
+    <text x="1367" y="576" font-size="45" font-weight="650" text-anchor="middle" fill="#fffefa">SQL</text>
+    <g font-size="35" font-weight="600" text-anchor="middle" fill="#203b30">
+      <text x="227" y="759">Catalog exports</text>
+      <text x="607" y="759">PIM website</text>
+      <text x="987" y="759">Report files</text>
+      <text x="1367" y="759">SQL Server</text>
     </g>
-    <path d="M550 760 V808 M980 760 V808" stroke="#ccd6c9" stroke-width="2"/>
-    <text x="98" y="894" font-size="21" fill="#67746b">Python · Playwright · SQL Server · Windows Task Scheduler</text>
-    <text x="1502" y="894" font-size="20" text-anchor="end" fill="#7c877e">WORKFLOW ILLUSTRATION</text>
+    <path d="M96 850 H1504" stroke="#d0dccf" stroke-width="2"/>
+    <text x="98" y="913" font-size="27" fill="#587361">Playwright</text>
+    <text x="800" y="913" font-size="27" text-anchor="middle" fill="#587361">Python</text>
+    <text x="1502" y="913" font-size="27" text-anchor="end" fill="#587361">SQL Server</text>
   </g>
 </svg>
