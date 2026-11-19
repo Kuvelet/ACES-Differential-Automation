@@ -4,6 +4,8 @@
 
 On November 19, 2026, the sanitized source passed **113 tests** on Windows in **12.072 seconds**. The run used the existing local Python environment, isolated temporary workspaces, synthetic files, a local browser fixture, and mocked SQL/Outlook interfaces. It did not submit reports, send email, or import data into company systems.
 
+The first public Windows/Python 3.12 [GitHub Actions run](https://github.com/Kuvelet/ACES-Differential-Automation/actions/runs/44599878973) independently passed all **113 tests in 9.332 seconds**. Dependency installation and browser download are additional CI setup time.
+
 | Test module | Tests | Main behavior covered |
 | --- | ---: | --- |
 | `test_detector.py` | 25 | Baseline, predecessor ordering, aliases, backdated arrivals, ties, missing inputs, incremental discovery and locks |
