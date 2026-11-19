@@ -21,7 +21,7 @@ The first public Windows/Python 3.12 [GitHub Actions run](https://github.com/Kuv
 
 The suite includes real child processes and a real Windows job-object termination test. SQL transactions are tested through an executable connection/cursor double; these tests do not prove SQL Server behavior under an actual network outage. Expected error messages in a passing run are deliberately injected test scenarios.
 
-[Run instructions](../README.md#inspect-and-test-the-source) · [GitHub Actions](https://github.com/Kuvelet/ACES-Differential-Automation/actions/workflows/tests.yml)
+[Run instructions](reconstruction.md#1-run-the-offline-suite) · [GitHub Actions](https://github.com/Kuvelet/ACES-Differential-Automation/actions/workflows/tests.yml)
 
 ## Recorded deployment checkpoint
 

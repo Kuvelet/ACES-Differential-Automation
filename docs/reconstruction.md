@@ -20,7 +20,17 @@ assets/                      Workflow illustration (SVG and PNG)
 
 ## 1. Run the offline suite
 
-Use the Windows/Python commands in the [README](../README.md#inspect-and-test-the-source). Python dependencies and Chromium are required; company credentials, SQL Server and Outlook are not required for the tests. No scheduled task is registered by installing dependencies or running tests.
+On Windows with Python 3.12 or later, run these commands from the repository root:
+
+```powershell
+py -3.12 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe -m playwright install chromium
+$env:PYTHONPATH = "$pwd/src"
+.\.venv\Scripts\python.exe -m unittest discover -s tests -v
+```
+
+The browser tests use a local HTML fixture and require Chromium. Windows is required for the process-containment tests. Company credentials, SQL Server, and Outlook are not required for the tests. No scheduled task is registered by installing dependencies or running tests.
 
 The following command checks the controller's disabled behavior using the example configuration:
 
