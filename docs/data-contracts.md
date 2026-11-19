@@ -1,12 +1,12 @@
 # Files, SQL tables and metadata
 
-The schema contract in [tsv_schema.json](../src/sql/tsv_schema.json) lists every original column, in order, and its approved SQL type. The [table DDL](../src/sql/001_create_differential_aces_tables.sql) and [import-log DDL](../src/sql/002_create_differential_aces_import_log.sql) preserve that implementation with public placeholder targets.
+The [TSV schema](../src/sql/tsv_schema.json) lists every original column in order and its SQL type. The [table creation script](../src/sql/001_create_differential_aces_tables.sql) defines the eight destination tables, and the [import-log script](../src/sql/002_create_differential_aces_import_log.sql) defines the completion log. Database targets in both scripts use public placeholders.
 
-## Input and output identities
+## Report files
 
-Input ZIP names encode an export UUID, configured catalog keyword, generation date and full-export marker. The ZIP must contain an XML member. The submission workflow checks filenames and IDs, nonzero/stable size and timestamps, and the ZIP member listing. It does not validate the XML against an ACES schema or recalculate fitment.
+Each input ZIP filename contains an export UUID, catalog keyword, generation date, and full-export marker. The ZIP must contain an XML file. Before submission, the workflow checks the filename and ID, confirms the file is nonempty and stable, and reads the ZIP member listing. XML schema validation and fitment calculations are outside these checks.
 
-Illustrative layout (these are names, not bundled company files):
+Example archive layout using an invented catalog name:
 
 ```text
 exports/
@@ -23,7 +23,7 @@ exports/
         ...remaining extracted PIM outputs
 ```
 
-## Metadata in every data table
+## SQL columns
 
 | Column | Type | Population |
 | --- | --- | --- |
@@ -40,8 +40,8 @@ Original text is preserved, including blanks, leading zeros, Unicode and whitesp
 
 The importer checks exact headers/order and supports UTF-8 BOM or UTF-16 BOM files. Header-only files still receive import-log entries with a zero count.
 
-## Import-log contract
+## Import log
 
-One log row identifies one report/table import: report ID/name, table name, keyword, comparison dates, exact source filename, SHA-256, imported row count and import timestamp. The primary key is report ID plus table name; report name plus table name is also unique. The log commits with the data, so zero-row files and uncertain commit responses remain distinguishable from missing work.
+Each log row records one file imported into a report table: report ID/name, table name, keyword, comparison dates, exact source filename, SHA-256, imported row count and import timestamp. The primary key is report ID plus table name; report name plus table name is also unique. The log commits in the same transaction as the data. This records completion even for empty files and lets a later run recover the result when a commit acknowledgement is lost.
 
-SHA-256 is captured on first import. Routine completed-report checks validate log identity and coverage, not the old file contents or all historical SQL rows. This assumes completed imports are immutable outside the pipeline.
+A SHA-256 fingerprint is recorded on first import. Later runs check that the log identifies the expected report and covers all eight tables. They skip the completed files and historical SQL rows, assuming those records remain unchanged outside the pipeline.

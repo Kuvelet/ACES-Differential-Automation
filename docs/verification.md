@@ -1,52 +1,47 @@
-# Verification and evidence
+# Verification
 
-## Published source validation
+The tests cover the workflow's normal operation and its response to interruptions, invalid inputs, and repeated runs. They use temporary directories, synthetic files, a local browser fixture, and mocked SQL and Outlook connections. Running them does not submit reports to PIM, send email, or import company data.
 
-On November 19, 2026, the sanitized source passed **113 tests** on Windows in **12.072 seconds**. The run used the existing local Python environment, isolated temporary workspaces, synthetic files, a local browser fixture, and mocked SQL/Outlook interfaces. It did not submit reports, send email, or import data into company systems.
+## Test coverage
 
-The first public Windows/Python 3.12 [GitHub Actions run](https://github.com/Kuvelet/ACES-Differential-Automation/actions/runs/44599878973) independently passed all **113 tests in 9.332 seconds**. Dependency installation and browser download are additional CI setup time.
+| Test module | Behavior covered |
+| --- | --- |
+| `test_detector.py` | Baseline setup, predecessor ordering, aliases, backdated arrivals, ties, missing inputs, incremental discovery, and locks |
+| `test_pim_automation.py` | Matching acceptance messages, retries before Compare, uncertain submissions, interrupted state, and tracker-save failures |
+| `test_pim_browser.py` | File selection, confirmation matching, and browser recovery using Chromium and a local HTML fixture |
+| `test_collect_reports.py` | Complete output sets, matching prefixes, changing or corrupt ZIPs, unsafe extraction paths, conflicts, and recovery |
+| `test_import_reports.py` | Headers, types, text preservation, metadata, rollback, lost commit responses, duplicate prevention, and SQL destination checks |
+| `test_collection_runner.py` | Collection/import helper ordering and failure isolation |
+| `test_email_reports.py` | Submission notification state, retries, and repeat suppression |
+| `test_sql_success_emails.py` | Eight-file completion, row counts, recipients, HTML escaping, notification baselines, and saved email retries |
+| `test_workflow.py` | Stage ordering, overlap prevention, timeouts, Windows job objects, tracker backups, owner alerts, daily reminders, and completed-import skips |
 
-| Test module | Tests | Main behavior covered |
-| --- | ---: | --- |
-| `test_detector.py` | 25 | Baseline, predecessor ordering, aliases, backdated arrivals, ties, missing inputs, incremental discovery and locks |
-| `test_pim_automation.py` | 14 | Exact acceptance, pre-click retry, uncertainty hold, interrupted state and persistence failures |
-| `test_pim_browser.py` | 2 | Real Chromium against a local fixture; file selection, confirmation matching and browser recovery |
-| `test_collect_reports.py` | 16 | Complete sets, matching prefixes, changing or corrupt ZIPs, unsafe paths, conflicts and recovery |
-| `test_import_reports.py` | 18 | Headers/types, text preservation, metadata, rollback, lost commit response, duplicates and SQL target checks |
-| `test_collection_runner.py` | 5 | Original collection/import helper ordering and failure isolation |
-| `test_email_reports.py` | 6 | Submission notification state, retries and repeat suppression |
-| `test_sql_success_emails.py` | 7 | Eight-file completion, per-file counts, audience, HTML escaping, baseline and durable retries |
-| `test_workflow.py` | 20 | Stage ordering, overlap, timeouts, Windows job containment, tracker backup, owner alerts, daily reminders and ledger skips |
-| **Total** | **113** | |
+The suite includes actual child processes and a Windows job-object termination test. SQL tests use a simulated connection and cursor to exercise the importer's transaction handling. They cover how the code responds to connection failures; they do not reproduce a network outage against a running SQL Server. Error messages from deliberately injected failures can appear during a passing test run.
 
-The suite includes real child processes and a real Windows job-object termination test. SQL transactions are tested through an executable connection/cursor double; these tests do not prove SQL Server behavior under an actual network outage. Expected error messages in a passing run are deliberately injected test scenarios.
+The sanitized source passed locally on Windows on November 19, 2026, and in the first public [Windows/Python 3.12 CI run](https://github.com/Kuvelet/ACES-Differential-Automation/actions/runs/44599878973). See [setup instructions](reconstruction.md#local-setup) to run the tests, or [GitHub Actions](https://github.com/Kuvelet/ACES-Differential-Automation/actions/workflows/tests.yml) for subsequent results.
 
-[Run instructions](reconstruction.md#1-run-the-offline-suite) · [GitHub Actions](https://github.com/Kuvelet/ACES-Differential-Automation/actions/workflows/tests.yml)
+## Deployment checks
 
-## Recorded deployment checkpoint
+An internal check on November 19, 2026 recorded 10 completed reports, 80 committed file imports, and 1,613,045 data rows. These are report records accumulated by that date, rather than counts of unique parts or vehicles. An idle run completed without new submissions, collections, duplicate rows, or unresolved tracker issues.
 
-The internal November 19 validation recorded 10 completed reports, 80 committed file-import records, and 1,613,045 data rows. An idle verification completed without new submissions, new collections, duplicate rows or unresolved tracker issues. These values describe that checkpoint, not a live status endpoint or unique catalog entities.
-
-The optimization comparison recorded:
+A before-and-after check of the routine-work optimizations recorded:
 
 | Idle stage | Before | After |
 | --- | ---: | ---: |
-| Discovery | 9.460 s | 2.750 s |
-| SQL completed-import checks | 3.118 s | 1.273 s |
-| Complete workflow | Approximately 15 s | Approximately 7 s |
+| Export discovery | 9.460 s | 2.750 s |
+| Completed-import checks | 3.118 s | 1.273 s |
+| Full workflow | Approximately 15 s | Approximately 7 s |
 
-The tracker contents and modification time remained unchanged, and SQL totals did not change. This is one observed comparison. Directory size, share latency, new reports, SQL load and Outlook behavior all affect runtime. It is not a throughput benchmark for importing new data.
+The tracker contents and modification time stayed unchanged, as did the SQL totals. These timings describe one idle-run comparison. Directory size, network latency, new reports, SQL load, and Outlook behavior affect later runs; importing a new report involves additional work.
 
-Detailed production logs, screenshots and database extracts are excluded because they reveal operational identifiers. The public aggregate figures are transcribed from the recorded internal validation; public readers can independently run the regression tests, but cannot reproduce the private deployment checkpoint from this repository.
+Detailed production logs and database extracts remain private because they contain operational identifiers. The figures above are a dated record of validation, not a live measure of the ongoing workflow.
 
-## Claims and limits
+## Recovery limits
 
-- An acceptance toast proves what the script observed in PIM. There is no verified task-history reconciliation API.
-- A committed import-log group is the authority for routine duplicate checks. Later manual edits to historical TSVs or SQL data are not audited.
-- SQL atomicity covers the eight data imports and their log entries. It does not create a transaction spanning PIM, file shares and Outlook.
-- File publication is staged and verified, then performed file by file. A process interruption can leave a partial destination; retry verifies existing content and completes it.
-- Notification persistence supports retry. Outlook handoff is not proof of delivery, and a crash after handoff can produce a duplicate email.
-- The deployed run did not deliberately interrupt production PIM, SQL or Outlook. Failure tests use isolated fixtures and mocks.
-- No external monitor detects a computer that never starts the workflow. No automatic log-retention policy is included.
+PIM acceptance is checked through its confirmation message. The implementation has no verified task-history lookup, so an uncertain submission still needs review. Missing output alone cannot establish whether PIM accepted a job.
 
-The overview image is a workflow illustration. It is not a screenshot, a recording, or evidence of a particular run.
+The SQL transaction covers all eight data imports and their log entries. Files are copied through staging and verification, then published individually. An interrupted copy can leave a partial destination; a retry checks existing content and completes the remaining work. Completed imports are treated as final, without auditing later manual changes to TSVs or SQL rows.
+
+Saved notification state allows email retries, but Outlook accepting a message does not confirm inbox delivery. A crash after that handoff and before saving its result can also cause a repeated email.
+
+Production PIM, SQL, and Outlook were not deliberately interrupted during validation. Failure scenarios were exercised with isolated fixtures and mocks. Monitoring a host that never starts, and rotating old logs and screenshots, require separate operational arrangements.
