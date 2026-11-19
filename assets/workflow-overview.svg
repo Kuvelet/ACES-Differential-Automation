@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" role="img" aria-labelledby="title desc">
+  <title id="title">ACES Differential Automation workflow</title>
+  <desc id="desc">An hourly workflow pairs recurring catalog snapshots, submits a comparison to PIM, collects two ZIPs and two error files, and imports eight TSVs into SQL Server. Saved identity, safe retries and completion tracking connect the stages.</desc>
+  <rect width="1600" height="1000" fill="#f4f3ed"/>
+  <rect x="48" y="48" width="1504" height="904" rx="30" fill="#fffefa" stroke="#dedfd6" stroke-width="2"/>
+  <g font-family="Segoe UI, Arial, sans-serif">
+    <rect x="96" y="102" width="10" height="30" rx="5" fill="#315e4c"/>
+    <text x="124" y="127" font-size="25" font-weight="650" letter-spacing="2" fill="#315e4c">ACES DIFFERENTIAL AUTOMATION</text>
+    <text x="96" y="228" font-size="67" font-weight="650" letter-spacing="-2" fill="#202e29">From catalog snapshots</text>
+    <text x="96" y="306" font-size="67" font-weight="650" letter-spacing="-2" fill="#202e29">to traceable SQL history.</text>
+    <text x="98" y="366" font-size="27" fill="#65716a">One hourly workflow. Each comparison followed through to completion.</text>
+    <path d="M252 476 H1350" stroke="#aac1b3" stroke-width="4"/>
+    <g fill="#fffefa" stroke="#cdd7ce" stroke-width="2">
+      <rect x="96" y="442" width="334" height="238" rx="18"/>
+      <rect x="454" y="442" width="334" height="238" rx="18"/>
+      <rect x="812" y="442" width="334" height="238" rx="18"/>
+      <rect x="1170" y="442" width="334" height="238" rx="18" fill="#eaf2e9" stroke="#96b6a2"/>
+    </g>
+    <g fill="#315e4c">
+      <circle cx="140" cy="486" r="23"/><circle cx="498" cy="486" r="23"/>
+      <circle cx="856" cy="486" r="23"/><circle cx="1214" cy="486" r="23"/>
+    </g>
+    <g font-size="22" font-weight="650" fill="#fffefa" text-anchor="middle">
+      <text x="140" y="494">1</text><text x="498" y="494">2</text>
+      <text x="856" y="494">3</text><text x="1214" y="494">4</text>
+    </g>
+    <g font-size="32" font-weight="650" fill="#253b30">
+      <text x="122" y="555">Pair exports</text><text x="480" y="555">Submit to PIM</text>
+      <text x="838" y="555">Collect reports</text><text x="1196" y="555">Import to SQL</text>
+    </g>
+    <g font-size="23" fill="#5f6f65">
+      <text x="122" y="603">Previous + current</text><text x="122" y="637">for each catalog stream</text>
+      <text x="480" y="603">Request the comparison</text><text x="480" y="637">and confirm acceptance</text>
+      <text x="838" y="603">Preserve and extract</text><text x="838" y="637">2 ZIPs + 2 error files</text>
+      <text x="1196" y="603">8 TSVs, 8 tables</text><text x="1196" y="637">One report transaction</text>
+    </g>
+    <rect x="96" y="734" width="1408" height="100" rx="16" fill="#eef1e8"/>
+    <g fill="#315e4c" font-size="25" font-weight="600">
+      <text x="133" y="794">Saved report identity</text>
+      <text x="609" y="794">Safe retries</text>
+      <text x="1048" y="794">Completion tracking</text>
+    </g>
+    <path d="M550 760 V808 M980 760 V808" stroke="#ccd6c9" stroke-width="2"/>
+    <text x="98" y="894" font-size="21" fill="#67746b">Python · Playwright · SQL Server · Windows Task Scheduler</text>
+    <text x="1502" y="894" font-size="20" text-anchor="end" fill="#7c877e">WORKFLOW ILLUSTRATION</text>
+  </g>
+</svg>

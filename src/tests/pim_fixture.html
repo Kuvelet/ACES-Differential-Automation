@@ -1,0 +1,52 @@
+<!doctype html><html><body>
+<div id="login">
+<label>User Name <input aria-label="User Name"></label>
+<label>Password <input aria-label="Password" type="password"></label>
+<button onclick="document.querySelector('#login').hidden=true;document.querySelector('#menus').hidden=false">Log In</button>
+</div>
+<div id="menus" hidden>
+<button role="menuitem" onclick="document.querySelector('#reports').hidden=false">ACES</button>
+<button id="reports" role="menuitem" hidden onclick="document.querySelector('#differential').hidden=false">ACES Reports</button>
+<button id="differential" role="menuitem" hidden onclick="document.querySelector('#DashboardDialog').hidden=false">Differential</button>
+</div>
+<div id="DashboardDialog" hidden>
+<h2>ACES Differential</h2>
+<input id="file" type="file" hidden onchange="document.querySelector('#upload').hidden=false">
+<button onclick="document.querySelector('#file').click()">Browse</button>
+<button id="upload" hidden onclick="upload()">Upload</button>
+<div role="combobox" tabindex="0" onclick="options(document.querySelector('#DropDownListACESCompareReference'))"><input style="pointer-events:none" readonly id="DropDownListACESCompareReference" aria-label="Reference file (Older)"></div>
+<div role="combobox" tabindex="0" onclick="options(document.querySelector('#DropDownListACESCompareSource'))"><input style="pointer-events:none" readonly disabled id="DropDownListACESCompareSource" aria-label="Source file (Newer)"></div>
+<input aria-label="Report Name" id="report" onkeyup="typed=true" onblur="if(typed)committed=this.value">
+<button onclick="compare()">Compare</button>
+</div>
+<div id="choices"></div>
+<script>
+let files=[], typed=false, committed='';
+function upload(){
+ files.push(document.querySelector('#file').files[0].name);
+ document.querySelector('#upload').hidden=true;
+ document.querySelector('#DropDownListACESCompareReference').value='';
+ document.querySelector('#DropDownListACESCompareSource').value='';
+ document.querySelector('#DropDownListACESCompareSource').disabled=true;
+}
+function options(control){
+ const choices=document.querySelector('#choices');choices.replaceChildren();
+ files.forEach(file=>{
+  const option=document.createElement('div');option.setAttribute('role','option');
+  option.textContent=file+': '+file.split('~')[1].replace('.zip','.xml');
+  option.onclick=()=>{control.value=option.textContent; choices.replaceChildren();
+    if(control.id==='DropDownListACESCompareReference')document.querySelector('#DropDownListACESCompareSource').disabled=false;};
+  choices.append(option);
+ });
+}
+document.addEventListener('keydown', e=>{if(e.key==='Escape')document.querySelector('#choices').replaceChildren()});
+function compare(){
+ window.compareCount=(window.compareCount||0)+1;
+ const toast=document.createElement('div');toast.id='toast_1';
+ const title=document.createElement('div'), body=document.createElement('div');
+ title.textContent=committed?'Task':'Name';
+ body.textContent=committed?'Added '+committed:'Name cannot be empty';
+ toast.append(title,body);document.body.append(toast);
+ if(committed)document.querySelector('#DashboardDialog').hidden=true;
+}
+</script></body></html>

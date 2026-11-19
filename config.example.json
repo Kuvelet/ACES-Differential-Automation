@@ -1,0 +1,54 @@
+{
+  "source_folder": "C:/ACES-Workflow/inputs",
+  "state_folder": "C:/ACES-Workflow/state",
+  "keywords": [
+    "Example Catalog_BrandAlpha-ACES",
+    "Example Catalog_BrandBeta"
+  ],
+  "stability_seconds": 4,
+  "pim": {
+    "login_url": "https://pim.example.invalid/Login",
+    "username": "automation-user",
+    "hold_invalid": true
+  },
+  "collection": {
+    "enabled": false,
+    "source_folder": "C:/ACES-Workflow/pim-outputs",
+    "destination_folder": "C:/ACES-Workflow/exports",
+    "stability_seconds": 10
+  },
+  "sql_import": {
+    "enabled": false,
+    "server": "CATALOGSQL\\CATALOG",
+    "database": "CatalogWarehouse",
+    "driver": "ODBC Driver 18 for SQL Server",
+    "batch_size": 1000,
+    "query_timeout_seconds": 120,
+    "skip_completed": true,
+    "hold_invalid": true
+  },
+  "email": {
+    "enabled": false,
+    "success_only": true,
+    "to": "catalog-team@example.invalid",
+    "cc": "catalog-review@example.invalid; operations@example.invalid",
+    "bcc": "owner@example.invalid",
+    "error_to": "owner@example.invalid"
+  },
+  "workflow": {
+    "enabled": false,
+    "failure_recipient": "owner@example.invalid",
+    "reminder_hour_eastern": 9,
+    "waiting_alert_hours": 24,
+    "sql_success_email_enabled": false,
+    "credential_file": "C:/ACES-Workflow/private/pim_credential.xml",
+    "stage_timeout_seconds": {
+      "discover": 600,
+      "submit": 3600,
+      "collect": 3600,
+      "import": 7200,
+      "notify_sql_success": 120,
+      "notify_success": 120
+    }
+  }
+}
